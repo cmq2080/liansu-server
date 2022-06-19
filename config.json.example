@@ -1,0 +1,33 @@
+{
+    "server": {
+        "ip": "127.0.0.1",
+        "port": "80",
+        "wwwroot": "D:/wwwroot"
+    },
+    "nginx": {
+        "dir": "D:\\Environment\\PHP\\nginx-1.20.2",
+        "conf": "",
+        "logs_dir": ""
+    },
+    "php": {
+        "dir": "D:\\Environment\\PHP\\php-7.4.27-nts-Win32-vc15-x64",
+        "ini": "",
+        "port": ""
+    },
+    "apps": [
+        {
+            "name": "dev",
+            "root": "_dev",
+            "server_name": "",
+            "listen": "",
+            "logs_dir": ""
+        },
+        {
+            "name": "wenshilian",
+            "root": "D:\\wwwroot\\wenshilian\\public",
+            "server_name": "wenshilian.loc",
+            "listen": "80",
+            "logs_dir": ""
+        }
+    ]
+}
