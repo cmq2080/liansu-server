@@ -1,0 +1,10 @@
+# 除php-cgi-spawner之外的应用程序
+*.exe
+!php-cgi-spawner.exe
+
+# 配置文件
+*.json
+*.conf
+
+# 中间文件
+rsrc.syso
