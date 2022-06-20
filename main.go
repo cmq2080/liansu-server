@@ -21,7 +21,8 @@ var (
 	thisDir     string
 	thisConfDir string
 
-	cfg *Config
+	cfgFilepath string
+	cfg         *Config
 )
 
 func main() {
@@ -38,8 +39,16 @@ func initialize() {
 	thisConfDir = getRealDir(thisDir + "/conf")
 
 	// 初始化配置
+	// reloadCfg()
+}
+
+func reloadCfg() {
+	if cfgFilepath == "" {
+		cfgFilepath = thisDir + "/config.json"
+	}
+
 	cfg = &Config{}
-	cfg.Init(thisDir + "/config.json")
+	cfg.Init(cfgFilepath)
 }
 
 func runApp() {
