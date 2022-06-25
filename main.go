@@ -63,7 +63,7 @@ func showConfig() {
 	var tab string = "\t\t"
 	fmt.Println("配置信息\n********************")
 	fmt.Println("[Server]")
-	fmt.Println("ip" + tab + cfg.Server.Ip)
+	fmt.Println("host" + tab + cfg.Server.Host)
 	fmt.Println("port" + tab + cfg.Server.Port)
 	fmt.Println("wwwroot" + tab + cfg.Server.Wwwroot)
 
@@ -186,10 +186,10 @@ func exportNginx() {
 
 	lsConfText += "server {\n"
 	lsConfText += "\tlisten " + cfg.Server.Port + lineSpliter
-	lsConfText += "\tserver_name " + cfg.Server.Ip + lineSpliter + "\n"
+	lsConfText += "\tserver_name " + cfg.Server.Host + lineSpliter + "\n"
 
 	lsConfText += "\tset $www_root " + cfg.Server.Wwwroot + lineSpliter
-	lsConfText += "\tset $php_port " + cfg.Server.Ip + ":" + cfg.Php.Port + lineSpliter + "\n"
+	lsConfText += "\tset $php_port " + cfg.Server.Host + ":" + cfg.Php.Port + lineSpliter + "\n"
 
 	lsConfText += "\tset $app_name 0" + lineSpliter
 	lsConfText += "\tset $root 0" + lineSpliter
@@ -297,7 +297,7 @@ func exportNginx() {
 		lsConfText += "\t}\n\n"
 
 		lsConfText += "\tlocation ~ \\.php(.*)$ {\n"
-		lsConfText += "\t\tfastcgi_pass " + cfg.Server.Ip + ":" + cfg.Php.Port + lineSpliter
+		lsConfText += "\t\tfastcgi_pass " + cfg.Server.Host + ":" + cfg.Php.Port + lineSpliter
 		lsConfText += "\t\tfastcgi_index index.php" + lineSpliter + "\n"
 		lsConfText += "\t\tinclude fastcgi_params" + lineSpliter
 		lsConfText += "\t\tset $real_script_name $fastcgi_script_name" + lineSpliter

@@ -15,7 +15,7 @@ type Config struct {
 }
 
 type ServerConfig struct {
-	Ip      string `json:"ip"`
+	Host    string `json:"host"`
 	Port    string `json:"port"`
 	Wwwroot string `json:"wwwroot"`
 }
@@ -48,7 +48,7 @@ func (cfg *Config) Init(filepath string) {
 
 	serverRes := res["server"].(map[string]interface{})
 	serverCfg := ServerConfig{
-		Ip:      serverRes["ip"].(string),
+		Host:    serverRes["host"].(string),
 		Port:    serverRes["port"].(string),
 		Wwwroot: getRealDir(serverRes["wwwroot"].(string)),
 	}

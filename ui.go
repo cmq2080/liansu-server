@@ -58,12 +58,12 @@ func runGui() {
 				Layout: declarative.VBox{},
 				Children: []declarative.Widget{
 					declarative.Label{
-						Text: "IP",
+						Text: "域名/IP",
 						Font: commonFont,
 					},
 					declarative.LineEdit{
 						AssignTo: &LE_server_ip,
-						Text:     cfg.Server.Ip,
+						Text:     cfg.Server.Host,
 						Font:     editFont,
 					},
 					declarative.Label{
@@ -543,7 +543,7 @@ func reloadAppList() {
 
 func Action_saveConfig() {
 	// 从ui界面保存配置值
-	cfg.Server.Ip = LE_server_ip.Text()
+	cfg.Server.Host = LE_server_ip.Text()
 	cfg.Server.Port = LE_server_port.Text()
 	cfg.Server.Wwwroot = LE_server_wwwroot.Text()
 
@@ -572,7 +572,7 @@ func Action_saveConfig() {
 }
 
 func reloadWindow0() {
-	LE_server_ip.SetText(cfg.Server.Ip)
+	LE_server_ip.SetText(cfg.Server.Host)
 	LE_server_port.SetText(cfg.Server.Port)
 	LE_server_wwwroot.SetText(cfg.Server.Wwwroot)
 
