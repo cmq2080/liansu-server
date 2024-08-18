@@ -7,12 +7,22 @@
     "nginx": {
         "dir": "D:\\Environment\\PHP\\nginx-1.20.2",
         "conf": "",
-        "logs_dir": ""
+        "logs_dir": "",
+        "cmd": { // 仅适用于Linux
+			"start": "",
+			"stop": "",
+			"restart": ""
+		}
     },
     "php": {
         "dir": "D:\\Environment\\PHP\\php-7.4.27-nts-Win32-vc15-x64",
         "ini": "",
-        "port": ""
+        "port": "",
+        "cmd": { // 仅适用于Linux
+			"start": "",
+			"stop": "",
+			"restart": ""
+		}
     },
     "apps": [
         {

@@ -1,3 +1,6 @@
+//go:build windows
+// +build windows
+
 package main
 
 import (
@@ -58,7 +61,7 @@ func runGui() {
 				Layout: declarative.VBox{},
 				Children: []declarative.Widget{
 					declarative.Label{
-						Text: "域名/IP",
+						Text: "主机（域名/IP）",
 						Font: commonFont,
 					},
 					declarative.LineEdit{
@@ -590,7 +593,7 @@ func Action_startEnv() {
 	Action_saveConfig()
 
 	// 导出nginx配置
-	exportNginx()
+	exportToLsNginxConf()
 
 	startEnv()
 }

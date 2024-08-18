@@ -8,3 +8,6 @@
 
 # 中间文件
 rsrc.syso
+
+# 编译输出目录
+deploy
