@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"os"
-	"runtime"
 	"strings"
 )
 
@@ -15,21 +14,29 @@ type Config struct {
 }
 
 type ServerConfig struct {
-	Ip      string `json:"ip"`
+	Host    string `json:"host"`
 	Port    string `json:"port"`
 	Wwwroot string `json:"wwwroot"`
 }
 
 type NginxConfig struct {
-	Dir      string `json:"dir"`
-	Conf     string `json:"conf"`
-	Logs_dir string `json:"logs_dir"`
+	Dir      string     `json:"dir"`
+	Conf     string     `json:"conf"`
+	Logs_dir string     `json:"logs_dir"`
+	Cmd      *CmdConfig `json:"cmd"`
+}
+
+type CmdConfig struct {
+	Start   string `json:"start"`
+	Stop    string `json:"stop"`
+	Restart string `json:"restart"`
 }
 
 type PHPConfig struct {
-	Dir  string `json:"dir"`
-	Ini  string `json:"ini"`
-	Port string `json:"port"`
+	Dir  string     `json:"dir"`
+	Ini  string     `json:"ini"`
+	Port string     `json:"port"`
+	Cmd  *CmdConfig `json:"cmd"`
 }
 
 type AppConfig struct {
@@ -48,7 +55,7 @@ func (cfg *Config) Init(filepath string) {
 
 	serverRes := res["server"].(map[string]interface{})
 	serverCfg := ServerConfig{
-		Ip:      serverRes["ip"].(string),
+		Host:    serverRes["host"].(string),
 		Port:    serverRes["port"].(string),
 		Wwwroot: getRealDir(serverRes["wwwroot"].(string)),
 	}
@@ -66,6 +73,17 @@ func (cfg *Config) Init(filepath string) {
 	if nginxCfg.Logs_dir == "" {
 		nginxCfg.Logs_dir = nginxCfg.Dir + "/logs"
 	}
+	// fmt.Println(nginxRes)
+	// fmt.Println(nginxCmdRes)
+	if isLinux() {
+		nginxCmdRes := nginxRes["cmd"].(map[string]interface{})
+		nginxCmd := &CmdConfig{
+			Start:   nginxCmdRes["start"].(string),
+			Stop:    nginxCmdRes["stop"].(string),
+			Restart: nginxCmdRes["restart"].(string),
+		}
+		nginxCfg.Cmd = nginxCmd
+	}
 	cfg.Nginx = nginxCfg
 
 	phpRes := res["php"].(map[string]interface{})
@@ -79,6 +97,15 @@ func (cfg *Config) Init(filepath string) {
 	}
 	if phpCfg.Port == "" {
 		phpCfg.Port = "9000"
+	}
+	if isLinux() {
+		phpCmdRes := phpRes["cmd"].(map[string]interface{})
+		phpCmd := &CmdConfig{
+			Start:   phpCmdRes["start"].(string),
+			Stop:    phpCmdRes["stop"].(string),
+			Restart: phpCmdRes["restart"].(string),
+		}
+		phpCfg.Cmd = phpCmd
 	}
 	cfg.Php = phpCfg
 
@@ -116,7 +143,7 @@ func getRealDir(dir string) string {
 }
 
 func isAbsoluteDir(dir string) bool {
-	if runtime.GOOS == "windows" {
+	if isWindows() {
 		return strings.Contains(dir, ":")
 	} else {
 		return dir[0:1] == "/"
